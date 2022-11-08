@@ -1,0 +1,9 @@
+select
+  cast('ibec_CopyData(dbOrigem,dbDestino, '''
+    ||trim(rf.rdb$relation_name)||''','
+    ||'''SELECT '|| list(trim(rf.rdb$field_name)) ||' FROM ATENDIMENTO'','
+    ||'''EmptyTable'','''');' as varchar(5000))
+
+from rdb$relation_fields rf
+where rf.rdb$system_flag = 0
+group by rf.rdb$relation_name
