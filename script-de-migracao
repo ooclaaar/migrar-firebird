@@ -1,0 +1,32 @@
+execute ibeblock
+as
+begin
+  vUser = 'SYSDBA';
+  vPass = 'masterkey';
+  vCharset = 'WIN1252';
+
+  vHost = '192.168.1.5/3050';
+  vBanco = '/db/fortes/acc.fdb';
+  vClientLib = 'C:\Program Files (x86)\Firebird\Firebird_3_0\fbclient.dll';
+
+  dbOrigem = ibec_CreateConnection(__ctFirebird,
+    'DBName='+vHost+':'+vBanco+'; '+
+    'ClientLib='+vCLientlIB+'; '+
+    'user='+vUser+'; password='+vPass+'; names='+vCharset+';');
+
+  vHost = '127.0.0.1/3050';
+  vBanco = 'C:\Fortes\DB\AC.FDB';
+  vClientLib = 'C:\Program Files (x86)\Firebird\Firebird_2_5\bin\fbclient.dll';
+
+  dbDestino = ibec_CreateConnection(__ctFirebird,
+    'DBName='+vHost+':'+vBanco+'; '+
+    'ClientLib='+vCLientlIB+'; '+
+    'user='+vUser+'; password='+vPass+'; names=WIN1252;');
+
+  /* AQUI VOCÊ DEVE COLOCAR AS LINHAS DE TABELAS PARA MIGRAR */
+    
+  ibec_CloseConnection(dbOrigem);
+  ibec_CloseConnection(dbDestino);
+
+  ibec_ShowMessage('CHEGOU AQUI');
+end
